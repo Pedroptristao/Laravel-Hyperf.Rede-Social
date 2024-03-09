@@ -14,8 +14,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(
-            class: DefaultUserSeeder::class,
-        );
+        if(app()->environment('local')) {
+
+            $this->call(
+                class: DefaultUserSeeder::class,
+            );
+            $this->call(
+                class: DefaultPostSeeder::class,
+            );
+        }
     }
 }
