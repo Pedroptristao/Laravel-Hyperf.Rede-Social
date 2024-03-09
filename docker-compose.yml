@@ -15,8 +15,8 @@ services:
       - APP_ENV=dev
       - SCAN_CACHEABLE=false
 
-  hyperf-skeleton-mysql:
-    container_name: hyperf-skeleton-db
+  application-db:
+    container_name: application-db
     image: mysql:latest
     ports:
       - 3306:3306
@@ -24,7 +24,7 @@ services:
       - app-network
     environment:
       MYSQL_ROOT_PASSWORD: "secret"
-      MYSQL_DATABASE: "hyperf"
+      MYSQL_DATABASE: "db"
 
   hyperf-skeleton-redis:
     container_name: hyperf-skeleton-redis
@@ -58,6 +58,14 @@ services:
     volumes:
       - ./laravel/:/var/www
       - ./laravel/.docker/php/php.ini:/usr/local/etc/php/conf.d/local.ini
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - app-network
 
 networks:
   app-network:
