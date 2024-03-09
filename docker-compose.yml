@@ -43,8 +43,8 @@ services:
     volumes:
       - ./:/var/www
       - ./laravel/.docker/nginx:/etc/nginx/conf.d
-      - ./laravel/.dockker/nginx/laravel-app.conf:/etc/nginx/sites-available/laravel-app
-      - ./laravel/.dockker/nginx/laravel-app.conf:/etc/nginx/sites-enabled/laravel-app
+      - ./laravel/.docker/nginx/laravel-app.conf:/etc/nginx/sites-available/laravel-app
+      - ./laravel/.docker/nginx/laravel-app.conf:/etc/nginx/sites-enabled/laravel-app
     networks:
       - app-network
 

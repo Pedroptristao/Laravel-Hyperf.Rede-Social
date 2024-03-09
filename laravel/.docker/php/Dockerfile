@@ -25,6 +25,9 @@ RUN apt-get update && apt-get install -y libpq-dev && docker-php-ext-install pdo
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
 # Setup working directory
 WORKDIR /var/www/
 
