@@ -20,5 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('posts')->as('posts')->group(function() {
     Route::get('/', \App\Http\Controllers\Api\v1\Posts\IndexController::class)->name('index');
+    Route::post('/', \App\Http\Controllers\Api\v1\Posts\StoreController::class)->name('store');
     Route::get('{post:id}', \App\Http\Controllers\Api\v1\Posts\ShowController::class)->name('show');
 });

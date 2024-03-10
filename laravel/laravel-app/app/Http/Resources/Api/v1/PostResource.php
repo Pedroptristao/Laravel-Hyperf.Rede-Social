@@ -24,7 +24,9 @@ class PostResource extends JsonResource
                 'body' => $this->body,
                 'published' => $this->published
             ],
-            'relationships' => [],
+            'relationships' => [
+                'user' => $this->whenLoaded('user', new UserResource($this->user))
+            ],
             'links' => [
                 'self' => route('apiv1postsshow', $this->id),
                 'parent' => route('apiv1postsindex')

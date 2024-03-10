@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Models;
+namespace Domain\Posts\Models;
 
+use Domain\Posts\Models\Builders\PostBuilder;
+use Domain\Shared\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -30,6 +32,12 @@ class Post extends Model
         return $this->belongsTo(
             User::class,
             'user_id'
+        );
+    }
+
+    public function newEloquentBuilder($query): PostBuilder {
+        return new PostBuilder(
+            $query
         );
     }
 }
