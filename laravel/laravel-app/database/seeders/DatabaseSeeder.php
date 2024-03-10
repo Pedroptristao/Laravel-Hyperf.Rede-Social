@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Infrastructure\Database\Models\UserModel;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,14 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        if(app()->environment('local')) {
-
-            $this->call(
-                class: DefaultUserSeeder::class,
-            );
-            $this->call(
-                class: DefaultPostSeeder::class,
-            );
-        }
+        UserModel::factory()->create([
+            'first_name' => 'Usuario',
+            'last_name' => 'Teste',
+            'email' => 'pedroptristao@hotmail.com',
+        ]);
+        
     }
 }
