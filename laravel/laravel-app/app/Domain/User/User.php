@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\User;
 
 use DateTimeImmutable;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 
 class User
 {
@@ -38,7 +38,7 @@ class User
             first_name: $first_name,
             last_name: $last_name,
             email: $email,
-            password: Hash::make($password),
+            password: $password,
             emailVerifiedAt: null,
             profile_photo_path: $profile_photo_path,
             theme: $theme,

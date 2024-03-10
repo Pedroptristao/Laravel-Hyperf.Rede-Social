@@ -31,27 +31,28 @@ class CreateUserControllerTest extends TestCase
 
     public function testGivenCommandItShouldReturnHttpCreated(): void
     {
-        $this->handler
-            ->shouldReceive('handle')
-            ->once()
-            ->with(Mockery::on(fn($arg) => $arg == new CreateUserCommand(
-                name: 'name',
-                email: 'email',
-                password: 'password',
-            )));
+        $command = new CreateUserCommand(
+            first_name: 'name',
+            last_name: 'test',
+            email: 'email',
+            password: 'password',
+            profile_photo_path: '',
+            theme: ''              
+        );
 
         $this->request
             ->shouldReceive('toCommand')
-            ->once()
-            ->andReturn(new CreateUserCommand(
-                name: 'name',
-                email: 'email',
-                password: 'password',
-            ));
+            ->andReturn($command);
+
+        $this->handler
+            ->shouldReceive('handle')
+            ->with($command);
 
         $response = $this->controller->__invoke($this->request);
 
-        $this->assertEquals('', $response->getContent());
+        $this->assertEquals('{"first_name":"name","last_name":"test","email":"email","password":"password","profile_photo_path":"","theme":""}', $response->getContent());
         $this->assertEquals(Response::HTTP_CREATED, $response->getStatusCode());
     }
+
+
 }

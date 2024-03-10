@@ -21,14 +21,15 @@ class CreateUserRequestTest extends TestCase
 
     public function testSuccessResponse(): void
     {
-        $response = $this->post('/api/v1/user', [
-            "name" => "teste",
-            "email" => "teste",
-            "password" => "teste"
-        ], [
-            'accept' => 'application/json'
+        $response = $this->postJson('/api/v1/user', [
+            "first_name" => "Teste",
+            "last_name" => "Teste",
+            "email" => "teste@email.com",
+            "password" => "password",
+            "password_confirmation" => "password",
+            "profile_photo_path" => '',
+            "theme" => 'light'
         ]);
-
         $response->assertStatus(201);
     }
 
@@ -51,69 +52,53 @@ class CreateUserRequestTest extends TestCase
             'empty request' => [
                 'data' => [],
                 'expected' => [
-                    "message" => "The name field is required. (and 2 more errors)",
-                    "errors" =>[
-                        "email" => [
-                            "The email field is required."
-                        ],
-                        "password" => [
-                            "The password field is required."
-                        ],
-                        "name" => [
-                            "The name field is required."
-                        ]
+                    "message" => "The first name field is required. (and 3 more errors)",
+                    "errors" => [
+                        "first_name" => ["The first name field is required."],
+                        "last_name" => ["The last name field is required."],
+                        "email" => ["The email field is required."],
+                        "password" => ["The password field is required."],
                     ]
                 ]
             ],
             'with email and no password' => [
                 'data' => [
-                    'email' => 'email'
+                    'email' => 'email@test.com'
                 ],
                 'expected' => [
-                    "message" => "The name field is required. (and 1 more error)",
-                    "errors" =>[
-                        "name" => [
-                            "The name field is required."
-                        ],
-                        "password" => [
-                            "The password field is required."
-                        ]
+                    "message" => "The first name field is required. (and 2 more errors)",
+                    "errors" => [
+                        "first_name" => ["The first name field is required."],
+                        "last_name" => ["The last name field is required."],
+                        "password" => ["The password field is required."],
                     ]
                 ]
-
             ],
             'with password and no email' => [
                 'data' => [
-                    'password' => 'password'
+                    'password' => '123456789'
                 ],
                 'expected' => [
-                    "message" => "The name field is required. (and 1 more error)",
-                    "errors" =>[
-                        "name" => [
-                            "The name field is required."
-                        ],
-                        "email" => [
-                            "The email field is required."
-                        ]
+                    "message" => "The first name field is required. (and 2 more errors)",
+                    "errors" => [
+                        "first_name" => ["The first name field is required."],
+                        "last_name" => ["The last name field is required."],
+                        "email" => ["The email field is required."],
                     ]
                 ]
             ],
-            'with name no password and no email' => [
+            'with first name, no password, and no email' => [
                 'data' => [
-                    'name' => 'name'
+                    'first_name' => 'name'
                 ],
                 'expected' => [
-                    "message" => "The email field is required. (and 1 more error)",
-                    "errors" =>[
-                        "password" => [
-                            "The password field is required."
-                        ],
-                        "email" => [
-                            "The email field is required."
-                        ]
+                    "message" => "The last name field is required. (and 2 more errors)",
+                    "errors" => [
+                        "last_name" => ["The last name field is required."],
+                        "email" => ["The email field is required."],
+                        "password" => ["The password field is required."],
                     ]
                 ]
-
             ]
         ];
     }

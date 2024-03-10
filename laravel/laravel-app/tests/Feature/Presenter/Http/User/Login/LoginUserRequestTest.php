@@ -4,6 +4,7 @@ namespace Tests\Feature\Presenter\Http\User\Login;
 
 use App\Infrastructure\Database\Models\UserModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class LoginUserRequestTest extends TestCase
@@ -74,7 +75,8 @@ class LoginUserRequestTest extends TestCase
     public function testSuccessLogin(): void {
 
         UserModel::factory()->create([
-            'name' => 'Test User',
+            'first_name' => 'Test',
+            'last_name' => 'User',
             'email' => 'test@example.com',
             'password' => 'password'
         ]);

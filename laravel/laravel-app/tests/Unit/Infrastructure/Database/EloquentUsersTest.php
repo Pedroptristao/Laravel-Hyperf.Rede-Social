@@ -29,18 +29,27 @@ class EloquentUsersTest extends TestsTestCase
     {
         $user = new User(
             id: 0,
-            name: '',
-            email: '',
-            password: '',
-            createdAt: new DateTimeImmutable('2023-09-09 00:15:00')
+            first_name: 'John',
+            last_name: 'Doe',
+            email: 'john@example.com',
+            password: 'password',
+            emailVerifiedAt: null,
+            profile_photo_path: '',
+            theme: '',
+            createdAt: new DateTimeImmutable('2023-09-09 00:15:00'),
+            updatedAt: new DateTimeImmutable('2023-09-09 00:15:00'),
+            deletedAt: null,
         );
         $this->model
             ->shouldReceive('create')
             ->once()
             ->with([
-                'name' => '',
-                'email' => '',
-                'password' => '',
+                'first_name' => 'John',
+                'last_name' => 'Doe',
+                'email' => 'john@example.com',
+                'password' => 'password',
+                'profile_photo_path' => '',
+                'theme' => '',
             ]);
 
         $this->repository->create($user);

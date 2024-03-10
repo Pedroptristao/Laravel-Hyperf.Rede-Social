@@ -30,7 +30,7 @@ class UserModelFactory extends Factory
             'last_name' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
-            'password' => Hash::make('password'),
+            'password' => 'password',
             'profile_photo_path' => null,
             'theme' => 'light',
             'remember_token' => Str::random(10),

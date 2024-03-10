@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Application\User\Create;
 
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Facade;
 use App\Application\User\Create\CreateUserCommand;
 use App\Application\User\Create\CreateUserCommandHandler;
 use App\Domain\User\User;
@@ -20,27 +22,40 @@ class CreateUserCommandHandlerTest extends TestCase
 
     public function setUp(): void
     {
+        parent::setUp();
+
         $this->users = $this->createMock(Users::class);
         $this->commandHandler = new CreateUserCommandHandler($this->users);
     }
 
     public function testCreateUserCommandHandler(): void
     {
+
         $command = new CreateUserCommand(
-            name: '',
-            email: '',
-            password: '',
+            first_name: 'John',
+            last_name: 'Doe',
+            email: 'john@example.com',
+            password: 'password',
+            profile_photo_path: '',
+            theme: ''
         );
+
         $this->users
             ->expects($this->once())
             ->method('create')
             ->with(
                 new User(
                     id: 0,
-                    name: '',
-                    email: '',
-                    password: '',
-                    createdAt: new DateTimeImmutable('2023-09-09 00:15:00')
+                    first_name: 'John',
+                    last_name: 'Doe',
+                    email: 'john@example.com',
+                    password: 'password',
+                    emailVerifiedAt: null,
+                    profile_photo_path: '',
+                    theme: '',
+                    createdAt: new DateTimeImmutable('2023-09-09 00:15:00'),
+                    updatedAt: new DateTimeImmutable('2023-09-09 00:15:00'),
+                    deletedAt: null,
                 )
             );
 

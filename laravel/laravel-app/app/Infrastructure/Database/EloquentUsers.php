@@ -25,11 +25,10 @@ class EloquentUsers implements Users
     public function get(int $id): User
     {
         try {
-            $user = $this->model->findOrFail($id);
+            $user = $this->model->findOrFail($id)->first();
         } catch (ModelNotFoundException) {
             throw new UserNotFound($id);
         }
-
         return User::fromArray($user->toArray());
     }
 

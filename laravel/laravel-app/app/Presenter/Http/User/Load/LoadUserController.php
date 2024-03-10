@@ -7,7 +7,7 @@ namespace App\Presenter\Http\User\Load;
 use App\Application\User\Load\LoadUserQuery;
 use App\Application\User\Load\LoadUserQueryHandler;
 use App\Domain\User\UserNotFound;
-use App\Presenter\Resources\User\UserResource;
+use App\Presenter\Resources\JsonOutputInterface;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -29,9 +29,8 @@ class LoadUserController
                 'details' => $e->getDetails()
             ], Response::HTTP_NOT_FOUND);
         }
-        
-        $response = UserResource::show($user);
-        
-        return new JsonResponse($response, Response::HTTP_OK);
+
+        $jsonOutput = new JsonOutputInterface($user);
+        return new JsonResponse($jsonOutput->show($user), Response::HTTP_OK);
     }
 }

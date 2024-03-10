@@ -14,9 +14,10 @@ class LoginUserCommandHandlerTest extends TestCase
 {
     private LoginUserCommandHandler $commandHandler;
 
-
     public function setUp(): void
     {
+        parent::setUp();
+
         $this->commandHandler = new LoginUserCommandHandler();
     }
 
@@ -26,10 +27,14 @@ class LoginUserCommandHandlerTest extends TestCase
             email: 'email',
             password: 'password',
         );
-        Auth::shouldReceive('attempt')->once()->andReturn(true)->with([
-            'email' => 'email',
-            'password' => 'password'
-        ]);
+
+        Auth::shouldReceive('attempt')
+            ->once()
+            ->with([
+                'email' => 'email',
+                'password' => 'password'
+            ])
+            ->andReturn(true);
 
         $this->assertNull($this->commandHandler->handle($command));
     }
@@ -40,10 +45,14 @@ class LoginUserCommandHandlerTest extends TestCase
             email: 'email',
             password: 'password',
         );
-        Auth::shouldReceive('attempt')->once()->andReturn(false)->with([
-            'email' => 'email',
-            'password' => 'password'
-        ]);
+
+        Auth::shouldReceive('attempt')
+            ->once()
+            ->with([
+                'email' => 'email',
+                'password' => 'password'
+            ])
+            ->andReturn(false);
 
         $this->expectException(UnauthorizedException::class);
         $this->commandHandler->handle($command);
