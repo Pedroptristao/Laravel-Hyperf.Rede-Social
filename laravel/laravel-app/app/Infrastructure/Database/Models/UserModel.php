@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Database\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -35,4 +36,8 @@ class UserModel extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // public function post(): HasMany {
+    //     return $this->hasMany();
+    // }
 }

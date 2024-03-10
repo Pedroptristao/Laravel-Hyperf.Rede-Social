@@ -7,6 +7,7 @@ namespace App\Presenter\Http\User\Load;
 use App\Application\User\Load\LoadUserQuery;
 use App\Application\User\Load\LoadUserQueryHandler;
 use App\Domain\User\UserNotFound;
+use App\Presenter\Resources\User\UserResource;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,17 +20,18 @@ class LoadUserController
 
     public function __invoke(int $userId): JsonResponse | Response
     {
-        try{
+        try {
             $query = new LoadUserQuery($userId);
             $user = $this->loadHandler->handle($query);
-        }catch(UserNotFound $e){
+        } catch (UserNotFound $e) {
             return new JsonResponse([
                 'error' => $e->getMessage(),
-                'details'=> 
-                $e->getDetails()
+                'details' => $e->getDetails()
             ], Response::HTTP_NOT_FOUND);
         }
-        return new JsonResponse(
-            $user, Response::HTTP_OK);
+        
+        $response = UserResource::show($user);
+        
+        return new JsonResponse($response, Response::HTTP_OK);
     }
 }
