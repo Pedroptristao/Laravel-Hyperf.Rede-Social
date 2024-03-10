@@ -11,6 +11,6 @@ class DefaultUserSeeder extends Seeder
 {
     public function run(): void
     {
-        User::factory()->create();
+        User::factory()->count(3)->create();
     }
 }
