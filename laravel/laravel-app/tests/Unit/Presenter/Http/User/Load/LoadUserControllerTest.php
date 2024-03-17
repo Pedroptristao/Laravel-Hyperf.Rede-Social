@@ -72,7 +72,7 @@ class LoadUserControllerTest extends TestCase
         $this->handler
             ->shouldReceive('handle')
             ->once()
-            ->andReturn(new Collection([$user]));
+            ->andReturn($user);
 
         $response = $this->controller->__invoke(6);
 

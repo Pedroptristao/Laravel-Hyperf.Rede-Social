@@ -29,7 +29,6 @@ class LoadUserController
                 'details' => $e->getDetails()
             ], Response::HTTP_NOT_FOUND);
         }
-
         $jsonOutput = new JsonOutputInterface($user);
         return new JsonResponse($jsonOutput->show($user), Response::HTTP_OK);
     }

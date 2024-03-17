@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Presenter\Providers;
 
+use App\Domain\Post\Posts;
 use App\Domain\User\Users;
+use App\Infrastructure\Database\EloquentPosts;
 use App\Infrastructure\Database\EloquentUsers;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -37,5 +38,6 @@ class AppServiceProvider extends ServiceProvider
     private function registerRepositories(): void
     {
         $this->app->bind(Users::class, EloquentUsers::class);
+        $this->app->bind(Posts::class, EloquentPosts::class);
     }
 }

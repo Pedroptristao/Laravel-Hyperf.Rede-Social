@@ -43,7 +43,7 @@ class UserModel extends Authenticatable
         $this->attributes['password'] = Hash::make($value);
     }
 
-    // public function post(): HasMany {
-    //     return $this->hasMany();
-    // }
+    public function post(): HasMany {
+        return $this->hasMany(PostModel::class, 'user_id');
+    }
 }

@@ -25,7 +25,7 @@ class EloquentUsers implements Users
     public function get(int $id): User
     {
         try {
-            $user = UserModel::findOrFail($id)->toArray();
+            $user = UserModel::with('post')->findOrFail($id)->toArray();
         } catch (ModelNotFoundException) {
             throw new UserNotFound($id);
         }
@@ -34,7 +34,7 @@ class EloquentUsers implements Users
 
     public function index(Query $query): Collection
     {
-        return $this->model->all();
+        return $this->model->with('post')->get();
     }
 
     public function create(User $user): void

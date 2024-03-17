@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\User;
 
 use DateTimeImmutable;
-use Illuminate\Support\Facades\Hash;
 
 class User
 {
@@ -21,6 +20,9 @@ class User
         public ?DateTimeImmutable $createdAt,
         public ?DateTimeImmutable $updatedAt,
         public ?DateTimeImmutable $deletedAt,
+        public ?array $relationships,
+        public ?string $route_self,
+        public ?string $route_parent,
     ) {
     }
 
@@ -44,7 +46,10 @@ class User
             theme: $theme,
             createdAt: new DateTimeImmutable('2023-09-09 00:15:00'),
             updatedAt: new DateTimeImmutable('2023-09-09 00:15:00'),
-            deletedAt: null
+            deletedAt: null,
+            relationships: null,
+            route_self: null,
+            route_parent: null
         );
     }
 
@@ -73,7 +78,10 @@ class User
             theme: $data['theme'] ?? 'light',
             createdAt: null,
             updatedAt: null,
-            deletedAt: null
+            deletedAt: null,
+            relationships: $data['post'],
+            route_self: 'api:v1:user:show',
+            route_parent: 'api:v1:user:index'
         );
     }
 }
