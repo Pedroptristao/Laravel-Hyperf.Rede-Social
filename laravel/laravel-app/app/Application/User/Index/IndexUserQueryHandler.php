@@ -9,6 +9,7 @@ use App\Application\QueryHandler;
 use App\Domain\User\User;
 use App\Domain\User\Users;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class IndexUserQueryHandler implements QueryHandler
 {
@@ -20,8 +21,8 @@ class IndexUserQueryHandler implements QueryHandler
     /**
      * @return User[]
      */
-    public function handle(Query $query): Collection
+    public function handle(Query $query, string | null $perPage): LengthAwarePaginator
     {
-        return $this->users->index($query);
+        return $this->users->index($query, $perPage);
     }
 }

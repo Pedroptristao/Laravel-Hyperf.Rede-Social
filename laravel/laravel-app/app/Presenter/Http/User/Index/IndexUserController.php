@@ -9,6 +9,7 @@ use App\Application\User\Index\IndexUserQueryHandler;
 use App\Domain\User\UserNotFound;
 use App\Presenter\Resources\JsonOutputInterface;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class IndexUserController
@@ -18,11 +19,12 @@ class IndexUserController
     ) {
     }
 
-    public function __invoke(): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
         try {
+            $perPage = $request->query('perPage');
             $query = new IndexUserQuery();
-            $users = $this->loadHandler->handle($query);
+            $users = $this->loadHandler->handle($query, $perPage);
         } catch (UserNotFound $e) {
             return new JsonResponse([
                 'error' => $e->getMessage(),

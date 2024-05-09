@@ -9,8 +9,9 @@ use App\Domain\User\User;
 use App\Domain\User\UserNotFound;
 use App\Domain\User\Users;
 use App\Infrastructure\Database\Models\UserModel;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 class EloquentUsers implements Users
 {
@@ -32,14 +33,20 @@ class EloquentUsers implements Users
         return User::fromArray($user);
     }
 
-    public function index(Query $query): Collection
+    public function index(Query $query, string | null $perPage): LengthAwarePaginator
     {
-        return $this->model->with('post')->get()->transform(
-            function ($user) {
-                $user->route_self = 'api:v1:user:show';
-                return $user;
-            }
-        );
+        $page = Paginator::resolveCurrentPage('page');
+        if(!$perPage) {
+            $perPage = 10;
+        }
+        $paginatedResults = $this->model->with('post')->paginate($perPage, ['*'], 'page', $page);
+    
+        $transformedResults = $paginatedResults->getCollection()->transform(function ($user) {
+            $user->route_self = 'api:v1:user:show';
+            return $user;
+        });
+        
+        return $paginatedResults->setCollection($transformedResults);
     }
 
     public function create(User $user): void
