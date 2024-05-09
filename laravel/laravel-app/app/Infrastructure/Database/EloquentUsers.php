@@ -34,7 +34,12 @@ class EloquentUsers implements Users
 
     public function index(Query $query): Collection
     {
-        return $this->model->with('post')->get();
+        return $this->model->with('post')->get()->transform(
+            function ($user) {
+                $user->route_self = 'api:v1:user:show';
+                return $user;
+            }
+        );;
     }
 
     public function create(User $user): void
