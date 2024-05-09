@@ -12,23 +12,20 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class JsonOutputInterface extends JsonResource
 {
-
     public function toArray(Request $request): array
-    {
+    {   
         $relationships = $this->getRelations();
         $attributes = $this->extractAttributes($request);
 
         foreach ($relationships as $relation => $value) {
             unset($attributes[$relation]);
         }
-
         return [
             'id' => $this->id,
             'attributes' => $attributes,
             'relationships' => $relationships,
             'links' => [
-                'self' => route('api:v1:user:show', $this->id),
-                'parent' => route('api:v1:user:index')
+                'self' => route($this->route_self, $this->id),
             ]
         ];
     }

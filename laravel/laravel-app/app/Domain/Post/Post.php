@@ -44,8 +44,8 @@ class Post
             updatedAt: new DateTimeImmutable('2023-09-09 00:15:00'),
             deletedAt: null,
             relationships: null,
-            route_self: null,
-            route_parent: null
+            route_self: 'api:v1:posts:show',
+            route_parent: 'api:v1:posts:index'
         );
     }
 
@@ -57,6 +57,7 @@ class Post
             'body' => $this->body,
             'published' => $this->published,
             'user_id' => $this->user_id,
+            'route_self' => 'api:v1:posts:show',
         ];
     }
 
@@ -67,7 +68,7 @@ class Post
             title: $data['title'],
             post_image_path: $data['post_image_path'],
             body: $data['body'] ?? null,
-            published: $data['published'] ?? null,
+            published: $data['published'] == 1 ? true : false,
             user_id: $data['user_id'] ?? 'light',
             createdAt: null,
             updatedAt: null,

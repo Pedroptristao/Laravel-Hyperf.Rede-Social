@@ -21,7 +21,7 @@ class PostModel extends Model
         'post_image_path',
         'body',
         'published',
-        'user_id'
+        'user_id',
     ];
 
     public function user(): BelongsTo {

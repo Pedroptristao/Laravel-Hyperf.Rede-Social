@@ -34,7 +34,12 @@ class EloquentPosts implements Posts
 
     public function index(Query $query): Collection
     {
-        return $this->model->with('user')->get();
+        return $this->model->with('user')->get()->transform(
+            function ($post) {
+                $post->route_self = 'api:v1:posts:show';
+                return $post;
+            }
+        );
     }
 
     public function create(Post $post): void
