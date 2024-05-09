@@ -9,6 +9,7 @@ use App\Application\Post\Index\IndexPostQueryHandler;
 use App\Domain\Post\PostNotFound;
 use App\Presenter\Resources\JsonOutputInterface;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class IndexPostController
@@ -18,11 +19,12 @@ class IndexPostController
     ) {
     }
 
-    public function __invoke(): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
         try {
+            $perPage = $request->query('perPage');
             $query = new IndexPostQuery();
-            $posts = $this->loadHandler->handle($query);
+            $posts = $this->loadHandler->handle($query, $perPage);
         } catch (PostNotFound $e) {
             return new JsonResponse([
                 'error' => $e->getMessage(),

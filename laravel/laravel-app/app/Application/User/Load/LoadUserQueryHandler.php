@@ -18,7 +18,7 @@ class LoadUserQueryHandler implements QueryHandler
     /**
      * @param LoadUserQuery $command
      */
-    public function handle(Query $command): User
+    public function handle(Query $command, string | null $perPage): User
     {   
         return $this->users->get($command->id);
     }

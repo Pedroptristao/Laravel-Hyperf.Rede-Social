@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace App\Presenter\Resources;
 
-use App\Domain\User\User;
-use App\Infrastructure\Database\Models\PostModel;
-use App\Infrastructure\Database\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

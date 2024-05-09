@@ -9,6 +9,7 @@ use App\Application\QueryHandler;
 use App\Domain\Post\Post;
 use App\Domain\Post\Posts;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class IndexPostQueryHandler implements QueryHandler
 {
@@ -20,8 +21,8 @@ class IndexPostQueryHandler implements QueryHandler
     /**
      * @return Post[]
      */
-    public function handle(Query $query): Collection
+    public function handle(Query $query, string | null $perPage): LengthAwarePaginator
     {
-        return $this->posts->index($query);
+        return $this->posts->index($query, $perPage);
     }
 }

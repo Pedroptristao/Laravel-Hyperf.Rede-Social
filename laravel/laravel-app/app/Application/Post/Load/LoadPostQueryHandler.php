@@ -18,7 +18,7 @@ class LoadPostQueryHandler implements QueryHandler
     /**
      * @param LoadPostQuery $command
      */
-    public function handle(Query $command): Post
+    public function handle(Query $command, string | null $perPage): Post
     {   
         return $this->posts->get($command->id);
     }

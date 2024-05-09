@@ -22,7 +22,7 @@ class LoadPostController
     {
         try {
             $query = new LoadPostQuery($postId);
-            $post = $this->loadHandler->handle($query);
+            $post = $this->loadHandler->handle($query, null);
         } catch (PostNotFound $e) {
             return new JsonResponse([
                 'error' => $e->getMessage(),

@@ -39,7 +39,7 @@ class EloquentUsers implements Users
                 $user->route_self = 'api:v1:user:show';
                 return $user;
             }
-        );;
+        );
     }
 
     public function create(User $user): void
