@@ -33,21 +33,25 @@ class EloquentUsers implements Users
         return User::fromArray($user);
     }
 
-    public function index(Query $query, string | null $perPage): LengthAwarePaginator
+    public function index(Query $query, ?string $perPage): LengthAwarePaginator
     {
         $page = Paginator::resolveCurrentPage('page');
-        if(!$perPage) {
+        if (!$perPage) {
             $perPage = 10;
         }
         $paginatedResults = $this->model->with('post')->paginate($perPage, ['*'], 'page', $page);
-    
+        
         $transformedResults = $paginatedResults->getCollection()->transform(function ($user) {
+            $user->friendships = $user->friendships();
+            unset($user->friend, $user->isFriendsWith);
+            
             $user->route_self = 'api:v1:user:show';
             return $user;
         });
-        
+            
         return $paginatedResults->setCollection($transformedResults);
     }
+    
 
     public function create(User $user): void
     {

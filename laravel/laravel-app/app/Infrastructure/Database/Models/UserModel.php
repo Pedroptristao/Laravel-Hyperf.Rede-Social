@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Database\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -46,4 +47,18 @@ class UserModel extends Authenticatable
     public function post(): HasMany {
         return $this->hasMany(PostModel::class, 'user_id');
     }
+
+    public function friend(): HasMany {
+        return $this->hasMany(UserFriendshipModel::class, 'user_id');
+    }
+
+    public function isFriendsWith(): HasMany {
+        return $this->hasMany(UserFriendshipModel::class, 'friend_id');
+    }
+
+    public function friendships(): Collection
+    {
+        return $this->friend()->get()->merge($this->isFriendsWith()->get());
+    }
+
 }

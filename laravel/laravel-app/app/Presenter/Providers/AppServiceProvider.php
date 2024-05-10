@@ -6,7 +6,9 @@ namespace App\Presenter\Providers;
 
 use App\Domain\Post\Posts;
 use App\Domain\User\Users;
+use App\Domain\UserFriendship\Friendships;
 use App\Infrastructure\Database\EloquentPosts;
+use App\Infrastructure\Database\EloquentUserFriendships;
 use App\Infrastructure\Database\EloquentUsers;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\ServiceProvider;
@@ -39,5 +41,6 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(Users::class, EloquentUsers::class);
         $this->app->bind(Posts::class, EloquentPosts::class);
+        $this->app->bind(Friendships::class, EloquentUserFriendships::class);
     }
 }

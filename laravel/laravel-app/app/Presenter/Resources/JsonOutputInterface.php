@@ -45,7 +45,7 @@ class JsonOutputInterface extends JsonResource
     {
         $attributes = $this->resource->toArray();
 
-        unset($attributes['password'], $attributes['remember_token'], $attributes['route_self']);
+        unset($attributes['password'], $attributes['remember_token'], $attributes['route_self'], $attributes['is_friends_with']);
 
         return $attributes;
     }
