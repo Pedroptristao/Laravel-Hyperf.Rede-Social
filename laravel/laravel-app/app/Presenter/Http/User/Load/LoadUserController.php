@@ -22,7 +22,7 @@ class LoadUserController
     {
         try {
             $query = new LoadUserQuery($userId);
-            $user = $this->loadHandler->handle($query);
+            $user = $this->loadHandler->handle($query, null);
         } catch (UserNotFound $e) {
             return new JsonResponse([
                 'error' => $e->getMessage(),
