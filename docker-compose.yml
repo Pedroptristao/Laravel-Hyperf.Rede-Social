@@ -1,4 +1,5 @@
 version: '3'
+
 services:
   hyperf-skeleton:
     container_name: hyperf-skeleton
@@ -8,7 +9,8 @@ services:
     volumes:
       - ./hyperf-app/:/opt/www
     ports:
-      - 9501:9501
+      - "9501:9501"
+      - "9502:9502"
     networks:
       - app-network
     environment:
@@ -58,6 +60,7 @@ services:
     volumes:
       - ./laravel/:/var/www
       - ./laravel/.docker/php/php.ini:/usr/local/etc/php/conf.d/local.ini
+
   mailhog:
     image: mailhog/mailhog
     container_name: mailhog
@@ -66,6 +69,16 @@ services:
       - "8025:8025"
     networks:
       - app-network
+
+  websocket-client:
+    build:
+      context: ./front-end/websocket-client
+      dockerfile: Dockerfile
+    container_name: websocket-client
+    networks:
+      - app-network
+    ports:
+      - "3000:3000"
 
 networks:
   app-network:

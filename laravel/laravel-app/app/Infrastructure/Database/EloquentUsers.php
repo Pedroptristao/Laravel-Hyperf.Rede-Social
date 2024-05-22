@@ -57,4 +57,18 @@ class EloquentUsers implements Users
     {
         $this->model->create($user->toArray());
     }
+
+    public function delete(int $id): array
+    {
+        try {
+            $userModel = UserModel::findOrFail($id);
+            $userArray = $userModel->toArray();
+
+            $userModel->delete();
+
+            return $userArray;
+        } catch (ModelNotFoundException) {
+            throw new UserNotFound($id);
+        }
+    }
 }

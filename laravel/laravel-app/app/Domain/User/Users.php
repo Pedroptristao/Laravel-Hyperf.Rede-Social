@@ -14,4 +14,6 @@ interface Users
     public function index(Query $query, string | null $perPage): LengthAwarePaginator;
 
     public function create(User $user): void;
+
+    public function delete(int $id): array;
 }

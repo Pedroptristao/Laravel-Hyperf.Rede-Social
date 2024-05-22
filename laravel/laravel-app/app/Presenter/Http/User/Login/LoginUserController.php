@@ -21,12 +21,16 @@ class LoginUserController
         try {
             $this->loginUserCommandHandler->handle($request->toCommand());
         } catch (UnauthorizedException $e) {
-            return new Response(null, Response::HTTP_FORBIDDEN);
+            return new JsonResponse([
+                'error' => 'Invalid credentials. Please try again.'
+            ], Response::HTTP_FORBIDDEN);
         }
+
         $token = $request->user()->createToken('login')->plainTextToken;
 
         return new JsonResponse([
-            'token' => $token
-        ], Response::HTTP_CREATED);
+            'token' => $token,
+            'user' => $request->user()
+        ], Response::HTTP_OK);
     }
 }
