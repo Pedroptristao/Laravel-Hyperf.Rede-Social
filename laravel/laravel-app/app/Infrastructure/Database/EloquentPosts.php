@@ -53,4 +53,18 @@ class EloquentPosts implements Posts
     {
         $this->model->create($post->toArray());
     }
+
+    public function delete(int $id): array
+    {
+        try {
+            $postModel = PostModel::findOrFail($id);
+            $postArray = $postModel->toArray();
+
+            $postModel->delete();
+
+            return $postArray;
+        } catch (ModelNotFoundException) {
+            throw new PostNotFound($id);
+        }
+    }
 }

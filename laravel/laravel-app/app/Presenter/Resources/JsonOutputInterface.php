@@ -18,7 +18,6 @@ class JsonOutputInterface extends JsonResource
             unset($attributes[$relation]);
         }
         return [
-            'id' => $this->id,
             'attributes' => $attributes,
             'relationships' => $relationships,
             'links' => [

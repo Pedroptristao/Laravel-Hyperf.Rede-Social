@@ -14,4 +14,6 @@ interface Posts
     public function index(Query $query, string | null $perPage): LengthAwarePaginator;
 
     public function create(Post $post): void;
+
+    public function delete(int $id): array;
 }
